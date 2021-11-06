@@ -21,7 +21,7 @@ export class Router {
    *                            visually
    */
   constructor(homeFunc) {
-    this['home'] = homeFunc;
+    this["home"] = homeFunc;
   }
 
   /**
@@ -66,16 +66,13 @@ export class Router {
      *     and URL + hash to history
      *  4. Finally, call the stored function for the given page
      */
-    try {
-      this[page];
-    }
-    catch(err) {
+    if(typeof this[page] !== "function") {
       console.log("ERROR: Function does not exist");
       return;
     }
 
     var hash = "";
-    if(page === "home") {
+    if(page == "home") {
       hash = "";
     }
     else {
@@ -83,9 +80,9 @@ export class Router {
     }
 
     if(!statePopped && window.location.hash != hash) {
-      history.pushState(page, "", "/" + hash);
+      history.pushState(page, "", window.location.origin + hash);
     }
 
-    this[page];
+    this[page]();
   }
 }
